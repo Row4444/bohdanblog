@@ -1,0 +1,43 @@
+{% extends 'index.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    {{ article.title }}
+{% endblock %}
+
+{% block background %}
+    {% if article.background_img %}
+        body{
+            background: url({{ article.background_img.url }});
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        h1, p, i, hr{
+            background: #fff; /* Цвет фона под заголовком */
+            opacity: 0.8;
+            padding: 2px; /* Поля вокруг текста */
+        }
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <h1 class="mt-5">
+        {{ article.title }}
+    </h1>
+
+        {{ article.body | safe }}
+    <hr>
+    <form action="" method="post">
+        {% csrf_token %}
+        <p>Comment this post, pls)</p>
+            {{ comment_form | crispy }}
+        <button style="margin-bottom: 50px;" type="submit" class="btn btn-success">Отправить комментарий</button>
+
+    </form>
+    {% for comment in comments.reverse %}
+        <b>{{ comment.author }}</b>: <i>{{ comment }}</i>
+        <br>
+    {% endfor %}
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'index.html' %}
+
+{% block title %}
+    All Articles
+{% endblock %}
+
+{% block content %}
+    <center>
+        <form style="margin-bottom: 20px;" action="{% url 'all' %}">
+        <div class="btn-group" role="group" aria-label="Basic example">
+          <button type="submit" name="order" value="-date" class="btn btn-secondary">New First</button>
+          <button type="submit" name="order" value="date" class="btn btn-secondary">Old First</button>
+        </div>
+        </form>
+    </center>
+
+
+    {% for article in object_list %}
+        <a href="{% url 'detail_url' id=article.id %}">
+            <div class="card bg-dark text-white">
+              <img style="
+                    object-fit: cover;
+                    height: 250px;
+                " src="{% if article.background_img %}{{ article.background_img.url }}{% endif %}" class="card-img" alt="...">
+              <div class="card-img-overlay">
+                <h5 class="card-title">{{ article.title | upper }}</h5>
+                <p class="card-text">{{ article.body | truncatewords:"10" | safe }}</p>
+                <p class="card-text">{{ article.date }}</p>
+              </div>
+            </div>
+        </a>
+    {% endfor %}
+{% endblock %}

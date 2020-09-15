@@ -1,0 +1,16 @@
+{% extends 'index.html' %}
+
+{% block title %}
+Activate
+{% endblock %}
+
+{% block content %}
+    {% if request.user.is_authenticated and request.user.is_activate %}
+        <h2>Your account has been verified.</h2>
+    {% endif %}
+
+    {% if request.user.is_authenticated and not request.user.is_activate %}
+    <h2>check your email box.</h2>
+    {% endif %}
+
+{% endblock %}
